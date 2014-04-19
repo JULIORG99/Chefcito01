@@ -3,78 +3,111 @@ package co.edu.eafit.chefcito;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.res.Resources;
-import android.support.v4.app.FragmentTabHost;
-import android.util.Log;
+import android.database.Cursor;
+import android.support.v4.widget.SimpleCursorAdapter;
 import android.view.Menu;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TabHost;
-import android.widget.TabHost.OnTabChangeListener;
+import android.widget.TextView;
+import android.widget.Toast;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements OnClickListener {	
 	
-	private ListView lstOpciones;
+	private DataBaseManager manager;
+	private Cursor cursor;
+	private TextView eti;
+	private ListView lista;
+	private ListView milista;
+	private SimpleCursorAdapter adapter;
+	private TextView tv;
+	private ImageButton bt;
+	String[] misingredientes = new String[1];
 	
-	final String[] datos = new String[]{"Arandano","Arroz","Arroz Integral","Avena","Azucar"};
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		setContentView(R.layout.activity_main);	
 		
-
-        final EditText txtNombre = (EditText)findViewById(R.id.TxtNombre);
-     
-        
-        Resources res = getResources();
-        
-        TabHost tabs=(TabHost)findViewById(android.R.id.tabhost);
-        tabs.setup();
-        
-        TabHost.TabSpec spec=tabs.newTabSpec("mitab1");
-        spec.setContent(R.id.tab1);
-        spec.setIndicator("Lista de Ingredientes", res.getDrawable(android.R.drawable.ic_btn_speak_now));
-        tabs.addTab(spec);
-        
-        spec=tabs.newTabSpec("mitab2");
-        spec.setContent(R.id.tab2);
-        spec.setIndicator("Mis Ingredientes", res.getDrawable(android.R.drawable.ic_dialog_map));
-        tabs.addTab(spec);
-        
-        tabs.setCurrentTab(0);
-        
-        tabs.setOnTabChangedListener(new OnTabChangeListener() {
-			@Override
-			public void onTabChanged(String tabId) {
-				Log.i("AndroidTabsDemo", "Pulsada pestaÒa: " + tabId);
-			}
+		
+		
+		manager = new DataBaseManager(this);
+		lista = (ListView)findViewById(R.id.listView1);
+		milista = (ListView)findViewById(R.id.listView2);
+		tv = (TextView) findViewById(R.id.editText1);
+		eti = (TextView) findViewById(R.id.textView1);
+		bt = (ImageButton) findViewById(R.id.imageButton1);
+		bt.setOnClickListener(this);
+		
+		
+		/*manager.instertar("azucar");
+		manager.instertar("arroz");
+		manager.instertar("sal");
+		manager.instertar("zanaoria");
+		manager.instertar("pan integral");
+		//agregar
+		*/	
+		
+		Resources res = getResources();
+		 
+		TabHost tabs=(TabHost)findViewById(android.R.id.tabhost);
+		tabs.setup();
+		 
+		TabHost.TabSpec spec=tabs.newTabSpec("mitab1");
+		spec.setContent(R.id.tab1);
+		spec.setIndicator("Lista de Ingredientes",res.getDrawable(android.R.drawable.ic_btn_speak_now));
+		tabs.addTab(spec);
+		 
+		spec=tabs.newTabSpec("mitab2");
+		spec.setContent(R.id.tab2);
+		spec.setIndicator("Mis Ingredientes",res.getDrawable(android.R.drawable.ic_dialog_map));
+		tabs.addTab(spec);
+		 
+		tabs.setCurrentTab(0);			
+		
+		final String[] from = new String[]{manager.CN_NAME};
+		final int[] to = new int[] {android.R.id.text1};
+		
+		cursor = manager.cargarCursor();
+		adapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1, cursor, from, to,0);
+		lista.setAdapter(adapter);
+		
+		ArrayAdapter<String> adaptador = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,misingredientes);
+		milista.setAdapter(adaptador);
+		
+		lista.setOnItemClickListener(new OnItemClickListener() {			
+			
+			public void onItemClick(AdapterView<?> l, View v,
+					int position, long id) {
+				
+				Cursor c = (Cursor) adapter.getItem(position);
+				
+				
+				
+				// TODO Auto-generated method stub
+				 eti.setText("Opci�n seleccionada: " + v + "y"+id);			
+			}			
 		});
-        
-        	 
-    	ArrayAdapter<String> adaptador =
-    	    new ArrayAdapter<String>(this,
-    	        android.R.layout.simple_list_item_1, datos);
-    	 
-    	lstOpciones = (ListView)findViewById(R.id.LstOpciones);
-    	 
-    	lstOpciones.setAdapter(adaptador);
-    	/*lstOpciones.setOnItemClickListener(new OnItemClickListener() {
-            public void onItemClick(AdapterView<?> a, View v, int position, long id) {
-            	
-            	//Alternativa 1:
-            	String opcionSeleccionada = 
-            			(a.getAdapter().getItem(position)).toString();
-            	
-            	//Alternativa 2:
-            	//String opcionSeleccionada = 
-            	//		((TextView)v.findViewById(R.id.LblTitulo))
-            	//			.getText().toString();
-            	
-            	lblEtiqueta.setText("OpciÛn seleccionada: " + opcionSeleccionada);
-            }
-        });*/
+		
 	}
+	
+		public void onClick(View view){
+			if (view.getId() == R.id.imageButton1){
+				
+				Cursor c = manager.buscarIngrediente(tv.getText().toString());
+				adapter.changeCursor(c);
+				
+			}
+		}
+		
+		
+	
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -82,5 +115,5 @@ public class MainActivity extends Activity {
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
-
+	
 }
