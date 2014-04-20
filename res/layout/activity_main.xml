@@ -15,12 +15,6 @@
             android1:layout_height="match_parent"
             android1:orientation="vertical" >
 
-            <TextView
-                android1:id="@+id/textView1"
-                android1:layout_width="wrap_content"
-                android1:layout_height="wrap_content"
-                android1:text="TextView" />
-
             <TabWidget
                 android1:id="@android:id/tabs"
                 android1:layout_width="match_parent"

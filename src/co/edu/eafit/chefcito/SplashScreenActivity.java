@@ -9,11 +9,23 @@ import android.content.Intent;
 
 public class SplashScreenActivity extends Activity {	
   private long splashDelay = 1000; //6 segundos
+  private DataBaseManager manager;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_splash_screen);   
+    setContentView(R.layout.activity_splash_screen);  
+    
+    
+    
+    manager = new DataBaseManager(this);   
+	manager.instertar("1","azucar");
+	manager.instertar("2","arroz");
+	manager.instertar("3","sal");
+	manager.instertar("4","zanaoria");
+	manager.instertar("5","pan integral");
+	
+	manager.eliminartabla();
     
     TimerTask task = new TimerTask() {
       @Override

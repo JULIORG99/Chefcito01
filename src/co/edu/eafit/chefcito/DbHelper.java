@@ -10,14 +10,14 @@ public class DbHelper extends SQLiteOpenHelper{
 	private static final int DB_SCHEME_VERSION = 1;
 
 	public DbHelper(Context context) {
-		super(context, DB_NAME, null, DB_SCHEME_VERSION);
-		
+		super(context, DB_NAME, null, DB_SCHEME_VERSION);		
 	}
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		
-		db.execSQL(DataBaseManager.CREATE_TABLE);		
+		db.execSQL(DataBaseManager.CREATE_TABLE);	
+		db.execSQL(DataBaseManager.CREATE_TABLE2);	
 	}
 
 	@Override
