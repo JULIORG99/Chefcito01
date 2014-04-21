@@ -37,20 +37,25 @@ public class DataBaseManager {
 		valores.put(CN_NAME, nombre);		
 		return valores;		
 	}
-	
-	public void instertarIngredients(String _id,String nombre){
+	//Tabla Mis ingredientes
+	public void instertarMisIngredients(String _id,String nombre){
 		db.insert(TABLE_NAME2, null, generarContentValues(_id,nombre));
 	}
-	public Cursor cargarCursorIngredientes(){
+	public Cursor cargarCursorMisIngredientes(){
 		String[] columnas = new String[]{CN_ID,CN_NAME};
 		return db.query(TABLE_NAME2, columnas, null, null, null, null, null);
 	}	
 	
-	public void eliminaring(String nombre) {
+	public void eliminarMisIngredientes(String nombre) {
         //bd.delete (Tabla, Claúsula Where, Argumentos Where)
         db.delete(TABLE_NAME2, CN_NAME + "=?", new String[]{nombre});
     }
 	
+	public void eliminarTablaMisIngredientes(){
+		db.delete("mis_ingredientes", null, null);
+	}	
+	
+	//Tabla ingredientes
 	public void instertar(String _id,String nombre){
 		db.insert(TABLE_NAME, null, generarContentValues(_id,nombre));
 	}
@@ -63,7 +68,5 @@ public class DataBaseManager {
 		String[] columnas = new String[]{CN_ID,CN_NAME};
 		return db.query(TABLE_NAME, columnas, CN_NAME + "=?", new String[]{nombre}, null, null, null);
 	}
-	public void eliminartabla(){
-		db.delete("mis_ingredientes", null, null);
-	}
+	
 }

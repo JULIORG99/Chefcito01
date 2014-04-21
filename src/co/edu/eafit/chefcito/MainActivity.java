@@ -2,10 +2,12 @@ package co.edu.eafit.chefcito;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -20,8 +22,7 @@ public class MainActivity extends Activity implements OnClickListener {
 	
 	private DataBaseManager manager;
 	private Cursor cursor;
-	private Cursor cursor2;
-	private TextView eti;
+	private Cursor cursor2;	
 	private ListView lista;
 	private ListView milista;
 	private SimpleCursorAdapter adapter;
@@ -69,7 +70,7 @@ public class MainActivity extends Activity implements OnClickListener {
 				cursor, from, to,0);		
 		lista.setAdapter(adapter);		
 		//genera Listview de ingredientes		
-		cursor2 = manager.cargarCursorIngredientes();
+		cursor2 = manager.cargarCursorMisIngredientes();
 		adapter2 = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1, 
 				cursor2, from, to,0);		
 		milista.setAdapter(adapter2);		
@@ -83,8 +84,8 @@ public class MainActivity extends Activity implements OnClickListener {
 				String _id = String.valueOf(id);
 				Toast.makeText(getApplicationContext(),
 						"Agrego: "+((TextView) view).getText(), Toast.LENGTH_SHORT).show();
-				manager.instertarIngredients(_id,((TextView) view).getText().toString());
-				Cursor c = manager.cargarCursorIngredientes();
+				manager.instertarMisIngredients(_id,((TextView) view).getText().toString());
+				Cursor c = manager.cargarCursorMisIngredientes();
 				adapter2.changeCursor(c);
 			}			
 		});
@@ -96,8 +97,8 @@ public class MainActivity extends Activity implements OnClickListener {
 				
 				Toast.makeText(getApplicationContext(), 
 						"Elimino: "+((TextView) view).getText(), Toast.LENGTH_SHORT).show();
-				manager.eliminaring(((TextView) view).getText().toString());	
-				Cursor c = manager.cargarCursorIngredientes();
+				manager.eliminarMisIngredientes(((TextView) view).getText().toString());	
+				Cursor c = manager.cargarCursorMisIngredientes();
 				adapter2.changeCursor(c);
 				
 			}			
@@ -117,4 +118,21 @@ public class MainActivity extends Activity implements OnClickListener {
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}	
+	
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    switch (item.getItemId()) {
+	        case R.id.menu_buscar:
+	        	Cursor c = manager.cargarCursorMisIngredientes();
+	        	if(c.moveToFirst()!=false){
+	        		Intent mainIntent = new Intent().setClass(MainActivity.this, Recetas.class);
+	                startActivity(mainIntent);
+	        	}else{
+	        		Toast.makeText(getApplicationContext(), 
+							"No a agregado ningún ingrediente a su lista", Toast.LENGTH_SHORT).show();
+	        	}       
+	            return true;	       
+	        default:
+	            return super.onOptionsItemSelected(item);
+	    }
+	}
 }

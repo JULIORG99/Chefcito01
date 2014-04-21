@@ -19,13 +19,19 @@ public class SplashScreenActivity extends Activity {
     
     
     manager = new DataBaseManager(this);   
-	manager.instertar("1","azucar");
-	manager.instertar("2","arroz");
-	manager.instertar("3","sal");
-	manager.instertar("4","zanaoria");
-	manager.instertar("5","pan integral");
+	manager.instertar("1","Azucar");
+	manager.instertar("2","Arroz");
+	manager.instertar("3","Sal");
+	manager.instertar("4","Zanaoria");
+	manager.instertar("5","Pan integral");
+	manager.instertar("6","Harina");
+	manager.instertar("7","Huevos");
+	manager.instertar("8","Solomo");
+	manager.instertar("9","Tomates");
+	manager.instertar("10","Miel");
 	
-	manager.eliminartabla();
+	
+	manager.eliminarTablaMisIngredientes();
     
     TimerTask task = new TimerTask() {
       @Override
