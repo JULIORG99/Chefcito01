@@ -7,7 +7,7 @@
     android:background="#ffffff" >
 
     <ImageView
-        android:id="@+id/imageView1"
+        android:id="@+id/imagenChefcito"
         android:layout_width="390dp"
         android:layout_height="300dp"
         android:layout_alignParentLeft="true"
@@ -18,7 +18,7 @@
         android:id="@+id/progressBar1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/imageView1"
+        android:layout_below="@+id/imagenChefcito"
         android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

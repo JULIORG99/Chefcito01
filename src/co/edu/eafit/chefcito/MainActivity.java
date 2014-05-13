@@ -123,9 +123,14 @@ public class MainActivity extends Activity implements OnClickListener {
 	    switch (item.getItemId()) {
 	        case R.id.menu_buscar:
 	        	Cursor c = manager.cargarCursorMisIngredientes();
-	        	if(c.moveToFirst()!=false){
+	        	if(c.moveToFirst()!=false){    		
+	        		
+	        		
 	        		Intent mainIntent = new Intent().setClass(MainActivity.this, Recetas.class);
 	                startActivity(mainIntent);
+	                
+	                
+	                
 	        	}else{
 	        		Toast.makeText(getApplicationContext(), 
 							"No a agregado ningún ingrediente a su lista", Toast.LENGTH_SHORT).show();

@@ -2,8 +2,10 @@
 <resources>
 
     <string name="app_name">Chefcito</string>
-    <string name="action_settings">Settings</string>    
+    <string name="action_settings">Settings</string>
     <string name="title_activity_splash_screen">SplashScreenActivity</string>
-    <string name="title_activity_recetas">Recetas</string>
+    <string name="title_activity_recetas">Recetas</string>    
+    <string name="title_activity_vista_receta">VistaReceta</string>      
+   
 
 </resources>

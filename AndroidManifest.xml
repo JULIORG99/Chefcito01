@@ -8,6 +8,8 @@
         android:minSdkVersion="15"
         android:targetSdkVersion="19" />
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -30,6 +32,10 @@
         <activity
             android:name="co.edu.eafit.chefcito.Recetas"
             android:label="@string/title_activity_recetas" >
+        </activity>
+        <activity
+            android:name="co.edu.eafit.chefcito.VistaReceta"
+            android:label="@string/title_activity_vista_receta" >
         </activity>
     </application>
 

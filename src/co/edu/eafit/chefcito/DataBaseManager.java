@@ -65,8 +65,9 @@ public class DataBaseManager {
 		return db.query(TABLE_NAME, columnas, null, null, null, null, null);
 	}	
 	public Cursor buscarIngrediente(String nombre){
-		String[] columnas = new String[]{CN_ID,CN_NAME};
-		return db.query(TABLE_NAME, columnas, CN_NAME + "=?", new String[]{nombre}, null, null, null);
+		String[] columnas = new String[]{CN_ID,CN_NAME};	
+		
+		return db.query(TABLE_NAME, columnas, CN_NAME + " like ?", new String[]{nombre+"%"}, null, null, null);
 	}
 	
 }
