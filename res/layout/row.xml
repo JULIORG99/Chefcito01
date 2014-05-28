@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+     >
+
+     <TextView
+         android:id="@+id/nombre_receta"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_alignParentLeft="true"
+         android:layout_alignParentTop="true"
+         android:paddingLeft="5dp"
+         android:text="nombre"
+         android:textColor="@color/black"
+         android:textSize="25sp" />
+
+     <TextView
+         android:id="@+id/dercripcion_receta"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_alignParentLeft="true"
+         android:layout_below="@+id/nombre_receta"
+         android:paddingLeft="5dp"
+         android:text="descripcion"
+         android:textColor="@color/silver"
+         android:textSize="12sp" />
+
+</RelativeLayout> 

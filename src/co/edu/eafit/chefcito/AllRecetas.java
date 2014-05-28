@@ -15,7 +15,6 @@ import org.json.JSONArray;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
@@ -25,32 +24,33 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
 
-public class Recetas extends Activity implements
-		AdapterView.OnItemClickListener {
-
-	private DataBaseManager manager;
+public class AllRecetas extends Activity implements
+AdapterView.OnItemClickListener{
 	private DrawerLayout mDrawer;
 	private ListView mDrawerOptions;
 	private String[] mTitles;
 	private ActionBarDrawerToggle mDrawerToggle;
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_recetas);
+		setContentView(R.layout.activity_all_recetas);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 
 		mTitles = getResources().getStringArray(R.array.menu_array);
-		mDrawerOptions = (ListView) findViewById(R.id.left_drawer3);
-		mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout3);
+		mDrawerOptions = (ListView) findViewById(R.id.left_drawer2);
+		mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout2);
+
 		mDrawerOptions.setAdapter(new ArrayAdapter<String>(this,
 				R.layout.drawer_list_item, mTitles));
 		mDrawerOptions.setOnItemClickListener(this);
+
 		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawer,
 				R.drawable.ic_drawer, R.string.drawer_open,
 				R.string.drawer_close) {
@@ -64,6 +64,7 @@ public class Recetas extends Activity implements
 											// onPrepareOptionsMenu()
 			}
 		};
+
 		mDrawerToggle.setDrawerIndicatorEnabled(true);
 		mDrawer.setDrawerListener(mDrawerToggle);
 
@@ -81,19 +82,19 @@ public class Recetas extends Activity implements
 			}
 		};
 		tr.start();
-
+		
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.recetas, menu);
+		inflater.inflate(R.menu.all_recetas, menu);
 		return super.onCreateOptionsMenu(menu);
 	}
 
 	public void cargaListado(final ArrayList<Item> datos) {
 
-		final ListView listado = (ListView) findViewById(R.id.recetas);
+		final ListView listado = (ListView) findViewById(R.id.allRecetas);
 		AdapterItem adapter = new AdapterItem(this, datos);
 		listado.setAdapter(adapter);
 
@@ -105,7 +106,7 @@ public class Recetas extends Activity implements
 
 				Log.i("ID", datos.get(position).getIdreceta());
 
-				Intent mainIntent = new Intent().setClass(Recetas.this,
+				Intent mainIntent = new Intent().setClass(AllRecetas.this,
 						VistaReceta.class);
 				mainIntent.putExtra("idReceta", datos.get(position)
 						.getIdreceta());
@@ -118,25 +119,7 @@ public class Recetas extends Activity implements
 
 	public String leer() {
 
-		manager = new DataBaseManager(this);
-		Cursor c = manager.cargarCursorMisIngredientes();
-		int nombreColumn = c.getColumnIndex(manager.CN_ID);
-		// Recorremos el cursor
-		final ArrayList<String> misingredientes = new ArrayList<String>();
-		for (c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
-			String name = c.getString(nombreColumn);
-			misingredientes.add(name.replace(" ", "%20"));
-		}
-		while (misingredientes.size() < 10) {
-			misingredientes.add(misingredientes.get(0));
-		}
-		String complemento = "?con=1&ing1=" + misingredientes.get(0) + "&ing2="
-				+ misingredientes.get(1) + "&ing3=" + misingredientes.get(2)
-				+ "&ing4=" + misingredientes.get(3) + "&ing5="
-				+ misingredientes.get(4) + "&ing6=" + misingredientes.get(5)
-				+ "&ing7=" + misingredientes.get(6) + "&ing8="
-				+ misingredientes.get(7) + "&ing9=" + misingredientes.get(8)
-				+ "&ing10=" + misingredientes.get(9);
+		String complemento = "?con=3";
 		String URL = getString(R.string.sURL);
 		// String URL = "http://chefcito.hol.es/GetData.php";
 
@@ -186,27 +169,24 @@ public class Recetas extends Activity implements
 				|| item.getItemId() == android.R.id.home) {
 			return true;
 		}
+
 		return super.onOptionsItemSelected(item);
 	}
-
+	
+	@Override
 	public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 		switch (i) {
 		case 0:
-			Intent mainIntent0 = new Intent().setClass(Recetas.this,
+			Intent mainIntent0 = new Intent().setClass(AllRecetas.this,
 					MainActivity.class);
 			startActivity(mainIntent0);
 			break;
-		case 1:
-			Intent mainIntent1 = new Intent().setClass(Recetas.this,
-					AllRecetas.class);
-			startActivity(mainIntent1);
-			break;
 		case 2:
-			Intent mainIntent2 = new Intent().setClass(Recetas.this,
+			Intent mainIntent1 = new Intent().setClass(AllRecetas.this,
 					Favoritos.class);
-			startActivity(mainIntent2);
-			break;
-		}
+			startActivity(mainIntent1);
+			break;		
+		}		
 		mDrawer.closeDrawers();
 		finish();
 	}
@@ -223,4 +203,5 @@ public class Recetas extends Activity implements
 		super.onConfigurationChanged(newConfig);
 		mDrawerToggle.onConfigurationChanged(newConfig);
 	}
+
 }

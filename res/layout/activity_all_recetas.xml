@@ -1,22 +1,23 @@
 <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/drawer_layout3"
+    android:id="@+id/drawer_layout2"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
     <FrameLayout
+        
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <ListView
-            android:id="@+id/recetas"
+            android:id="@+id/allRecetas"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
         </ListView>
     </FrameLayout>
 
     <ListView
-        android:id="@+id/left_drawer3"
+        android:id="@+id/left_drawer2"
         android:layout_width="240dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"

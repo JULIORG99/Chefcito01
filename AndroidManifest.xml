@@ -37,6 +37,14 @@
             android:name="co.edu.eafit.chefcito.VistaReceta"
             android:label="@string/title_activity_vista_receta" >
         </activity>
+        <activity
+            android:name="co.edu.eafit.chefcito.Favoritos"
+            android:label="@string/title_activity_favoritos" >
+        </activity>
+        <activity
+            android:name="co.edu.eafit.chefcito.AllRecetas"
+            android:label="@string/title_activity_all_recetas" >
+        </activity>
     </application>
 
 </manifest>

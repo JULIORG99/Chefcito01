@@ -4,8 +4,29 @@
     <string name="app_name">Chefcito</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_splash_screen">SplashScreenActivity</string>
-    <string name="title_activity_recetas">Recetas</string>    
-    <string name="title_activity_vista_receta">VistaReceta</string>      
-   
+    <string name="title_activity_recetas">Recetas</string>
+    <string name="title_activity_vista_receta">VistaReceta</string>
+    <string name="URL">http://10.0.2.2/chefcito/GetData.php</string>
+    <string name="URLimg">http://10.0.2.2/</string>
+    <string name="sURL">http://chefcito.hol.es/GetData.php</string>
+    <string name="sURLimg">http://chefcito.hol.es/</string>
+
+    <string-array name="menu_array">
+        <item>Busqueda por ingredientes</item>
+        <item>Recetas</item>
+        <item>Favoritos</item>
+    </string-array>
+
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+    <string name="ingredientes">Ingredientes</string>
+    <string name="Preparacion">Preparacion</string>
+    <string name="TxtPreparacion">TxtPreparacion</string>
+    <string name="TxtNombreReceta">TxtNombreReceta</string>
+    <string name="Dificultad">Dificultad:</string>
+    <string name="Tiempo">Tiempo</string>
+    <string name="title_activity_favoritos">Favoritos</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_all_recetas">AllRecetas</string>
 
 </resources>
