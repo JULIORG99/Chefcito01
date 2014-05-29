@@ -20,6 +20,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -42,6 +43,8 @@ import android.widget.Toast;
 public class VistaReceta extends Activity implements
 		AdapterView.OnItemClickListener {
 
+	private DataBaseManager manager;
+	private String id_receta;
 	private String nombre;
 	private String dificultad;
 	private String tiempo;
@@ -83,6 +86,7 @@ public class VistaReceta extends Activity implements
 
 		mDrawerToggle.setDrawerIndicatorEnabled(true);
 		mDrawer.setDrawerListener(mDrawerToggle);
+		manager = new DataBaseManager(this);
 
 		Thread tr = new Thread() {
 			@Override
@@ -186,7 +190,7 @@ public class VistaReceta extends Activity implements
 			JSONArray json = new JSONArray(response);
 
 			for (int i = 0; i < json.length(); i++) {
-				json.getJSONObject(i).getString("id_receta");
+				id_receta = json.getJSONObject(i).getString("id_receta");
 				nombre = json.getJSONObject(i).getString("nombre");
 				preparacion = json.getJSONObject(i).getString("preparacion");
 				dificultad = json.getJSONObject(i).getString(
@@ -230,7 +234,26 @@ public class VistaReceta extends Activity implements
 			return true;
 		}
 
-		return super.onOptionsItemSelected(item);
+		if (mDrawerToggle.onOptionsItemSelected(item)
+				|| item.getItemId() == android.R.id.home) {
+			return true;
+		}
+		switch (item.getItemId()) {
+		case R.id.menu_favorito:
+			Cursor c = manager.buscarFavorito(id_receta);
+			if (c.moveToFirst() != false) {				
+				manager.eliminarFavorito(id_receta);
+				Toast.makeText(getApplicationContext(), "Elimino da favoritos",
+						Toast.LENGTH_SHORT).show();
+			} else {
+				manager.instertarFavoritos(id_receta, nombre);
+				Toast.makeText(getApplicationContext(), "Agrego a favoritos ",
+						Toast.LENGTH_SHORT).show();				
+			}
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}		
 	}
 
 	private class CargaImagenes extends AsyncTask<String, Void, Bitmap> {

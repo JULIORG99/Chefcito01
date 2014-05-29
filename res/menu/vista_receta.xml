@@ -1,6 +1,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="co.edu.eafit.chefcito.VistaReceta" >
+    
+    
+    <item
+        android:id="@+id/menu_favorito"
+        android:orderInCategory="100"
+        android:showAsAction="ifRoom"
+        android:icon="@android:drawable/btn_star_big_off"
+        android:title="Favorito"/>
 
  
 

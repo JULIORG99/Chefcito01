@@ -3,9 +3,11 @@ package co.edu.eafit.chefcito;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SimpleCursorAdapter;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -13,9 +15,19 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.AdapterView.OnItemClickListener;
 
 public class Favoritos extends Activity implements
 		AdapterView.OnItemClickListener {
+	
+	private DataBaseManager manager;
+	private Cursor cursor;	
+	private ListView lista;	
+	private SimpleCursorAdapter adapter;
+	
+	
 	private DrawerLayout mDrawer;
 	private ListView mDrawerOptions;
 	private String[] mTitles;
@@ -51,6 +63,29 @@ public class Favoritos extends Activity implements
 
 		mDrawerToggle.setDrawerIndicatorEnabled(true);
 		mDrawer.setDrawerListener(mDrawerToggle);
+		
+		manager = new DataBaseManager(this);
+		lista = (ListView) findViewById(R.id.listViewFavoritos);
+		final String[] from = new String[] { manager.CN_NAME, manager.CN_ID };
+		final int[] to = new int[] { android.R.id.text1, android.R.id.text2};
+		cursor = manager.cargarCursorFavoritos();
+		adapter = new SimpleCursorAdapter(this,
+				android.R.layout.two_line_list_item, cursor, from, to, 0);
+		lista.setAdapter(adapter);
+		
+		lista.setOnItemClickListener(new OnItemClickListener() {
+
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				String _id = String.valueOf(id);
+				Intent mainIntent = new Intent().setClass(Favoritos.this,
+						VistaReceta.class);
+				mainIntent.putExtra("idReceta", _id);
+				startActivity(mainIntent);
+				finish();
+
+			}
+		});
 
 	}
 

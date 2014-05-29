@@ -18,6 +18,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
 		db.execSQL(DataBaseManager.CREATE_TABLE);
 		db.execSQL(DataBaseManager.CREATE_TABLE2);
+		db.execSQL(DataBaseManager.CREATE_TABLE3);
 	}
 
 	@Override
